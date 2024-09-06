@@ -146,8 +146,42 @@ class DoublyLinkedList {
     } while (node && node.next !== null);
   }
 
-  // !Update node value
-  update(key, value) { }
+  // Update node value
+  update(key, value) {
+    if (this._isListEmpty) {
+      return
+    }
+
+    let node = this.head
+
+    // Head case
+    if (this.head && this.head.key === key) {
+      node.value = value
+      console.log('Node found', node.ToString())
+      return this.head.value
+    }
+
+    // Tail case
+    if (this.tail && this.tail.key === key) {
+      node = this.tail // just for 
+      node.value = value
+      console.log('Node found', node.ToString())
+      return this.tail.value
+    }
+
+    node = this.head.next
+    do {
+      if (node.key === key) {
+        // early exits from loop
+        node.value = value
+        console.log('Node found', node.ToString())
+        return node.value
+      }
+      node = node.next
+    } while (node && node.next !== null);
+
+    console.log('Node not found!')
+  }
 }
 
 class LRU {
@@ -176,7 +210,10 @@ console.log('------------')
 for (const node of testList.list()) {
   console.log(node)
 }
-
+console.log('------------')
+testList.update(2, 'dos')
+console.log(testList)
+console.log('------------')
 // testList.remove(2)
 // console.log(testList)
 // console.log('------------')
