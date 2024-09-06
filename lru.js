@@ -27,7 +27,10 @@ class DoublyLinkedList {
   remove(key) { }
 
   // Remove all nodes
-  removeAll() { }
+  removeAll() {
+    this.head = null
+    this.tail = null
+  }
 
   // Get node by key
   get(key) { }
