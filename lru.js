@@ -84,7 +84,7 @@ class DoublyLinkedList {
         return
       }
       node = node.next
-    } while (node && node.next !== null);
+    } while (node !== null);
 
   }
 
@@ -129,7 +129,7 @@ class DoublyLinkedList {
         return node.value
       }
       node = node.next
-    } while (node && node.next !== null);
+    } while (node !== null);
 
     return null
   }
@@ -139,15 +139,15 @@ class DoublyLinkedList {
     let node = this.head
 
     do {
-      yield node.value
+      yield node
       node = node.next
-    } while (node && node.next !== null);
+    } while (node !== null);
   }
 
   // Update node value
   update(key, value) {
     if (this._isListEmpty) {
-      return
+      return null
     }
 
     let node = this.head
@@ -155,14 +155,14 @@ class DoublyLinkedList {
     // Head case
     if (this.head && this.head.key === key) {
       node.value = value
-      return this.head.value
+      return this.head
     }
 
     // Tail case
     if (this.tail && this.tail.key === key) {
       node = this.tail // just for 
       node.value = value
-      return this.tail.value
+      return this.tail
     }
 
     node = this.head.next
@@ -170,11 +170,12 @@ class DoublyLinkedList {
       if (node.key === key) {
         // early exits from loop
         node.value = value
-        return node.value
+        return node
       }
       node = node.next
-    } while (node && node.next !== null);
+    } while (node !== null);
 
+    return null
   }
 }
 
@@ -189,7 +190,20 @@ class LRU {
   }
 
   // Push data into cache
-  push() { }
+  push(key, value) {
+    if (this.hash.has(key)) {
+      this.linkedList.remove(key)
+    }
+
+    const node = new LinkedNode(key, value)
+    this.linkedList.add(node)
+    this.hash.set(key, node)
+    if (this.hash.size > this.size) {
+      this.hash.delete(this.linkedList.tail.key)
+      this.linkedList.removeTail()
+    }
+    return this.linkedList
+  }
 
   // Get data from cache
   get(key) {
@@ -197,7 +211,7 @@ class LRU {
       return null
     }
 
-    let node = this.hash.get(key)
+    const node = this.hash.get(key)
     if (node !== this.linkedList.head) {
       this.linkedList.remove(key)
       this.linkedList.add(node)
@@ -205,7 +219,40 @@ class LRU {
 
     return node.value
   }
+
+  // helper to log
+  ToString() {
+    let result = ''
+    for (const node of this.linkedList.list()) {
+      result = result + `${node.key}: ${node.value}, `
+    }
+    return result
+  }
 }
 
+const cache = new LRU(3)
 
-
+cache.push(1, 'one')
+console.log(cache.ToString())
+console.log('-------------')
+cache.push(2, 'two')
+console.log(cache.ToString())
+console.log('-------------')
+cache.push(3, 'three')
+console.log(cache.ToString())
+console.log('-------------')
+cache.get(1)
+console.log(cache.ToString())
+console.log('-------------')
+cache.push(4, 'four')
+console.log(cache.ToString())
+console.log('-------------')
+cache.get(2)
+console.log(cache.ToString())
+console.log('-------------')
+cache.get(3)
+console.log(cache.ToString())
+console.log('-------------')
+cache.push(5, 'five')
+console.log(cache.ToString())
+console.log('-------------')
