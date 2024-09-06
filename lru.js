@@ -136,8 +136,15 @@ class DoublyLinkedList {
     console.log('Node not found!')
   }
 
-  // !List all nodes
-  list() { }
+  // List all nodes
+  *list() {
+    let node = this.head
+
+    do {
+      yield node.value
+      node = node.next
+    } while (node && node.next !== null);
+  }
 
   // !Update node value
   update(key, value) { }
@@ -165,7 +172,11 @@ testList.add(3, 'three')
 console.log(testList)
 console.log('------------')
 console.log(testList.get(2))
-// console.log('------------')
+console.log('------------')
+for (const node of testList.list()) {
+  console.log(node)
+}
+
 // testList.remove(2)
 // console.log(testList)
 // console.log('------------')
