@@ -25,23 +25,21 @@ class DoublyLinkedList {
     return this.head === null && this.tail === null
   }
 
-  // Add node
-  add(key, value) {
+  // Add node, lru needs nodes to be added to head
+  add(node) {
     // if list is empty
     if (this._isListEmpty) {
-      this.head = new LinkedNode(key, value)
+      this.head = node
       this.tail = this.head
       return
     }
 
-    // create new node ditached from list
-    const node = new LinkedNode(key, value)
-    // new node prev is equal to last element on list
-    node.prev = this.tail
-    // last element on list next is equal to new node
-    this.tail.next = node
-    // last element on list points to new node
-    this.tail = node
+    // new node next is equal to * FIRST * element on list
+    node.next = this.head
+    // first element prev points to new node
+    this.head.prev = node
+    // head points to new node
+    this.head = node
   }
 
   // Remove node
@@ -90,6 +88,15 @@ class DoublyLinkedList {
 
   }
 
+  removeTail() {
+    // Clean tail prev next value
+    this.tail.prev.next = null
+    // Makes tail prev the new tail
+    this.tail = this.tail.prev
+    // return new tail
+    return this.tail
+  }
+
   // Remove all nodes
   removeAll() {
     this.head = null
@@ -99,7 +106,7 @@ class DoublyLinkedList {
   // Get node value by key
   get(key) {
     if (this._isListEmpty) {
-      return
+      return null
     }
 
     let node = this.head
@@ -124,6 +131,7 @@ class DoublyLinkedList {
       node = node.next
     } while (node && node.next !== null);
 
+    return null
   }
 
   // List all nodes
@@ -181,8 +189,22 @@ class LRU {
   }
 
   // Push data into cache
+  push() { }
 
   // Get data from cache
+  get(key) {
+    if (!this.hash.has(key)) {
+      return null
+    }
+
+    let node = this.hash.get(key)
+    if (node !== this.linkedList.head) {
+      this.linkedList.remove(key)
+      this.linkedList.add(node)
+    }
+
+    return node.value
+  }
 }
 
 
