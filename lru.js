@@ -21,7 +21,23 @@ class DoublyLinkedList {
     this.tail = null
   }
   // Add node
-  add(key, value) { }
+  add(key, value) {
+    // if list is empty
+    if (this.head === null && this.tail === null) {
+      this.head = new LinkedNode(key, value)
+      this.tail = this.head
+      return
+    }
+
+    // create new node ditached from list
+    const node = new LinkedNode(key, value)
+    // new node prev is equal to last element on list
+    node.prev = this.tail
+    // last element on list next is equal to new node
+    this.tail.next = node
+    // last element on list points to new node
+    this.tail = node
+  }
 
   // Remove node
   remove(key) { }
