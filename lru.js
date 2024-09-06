@@ -102,13 +102,44 @@ class DoublyLinkedList {
     this.tail = null
   }
 
-  // Get node by key
-  get(key) { }
+  // Get node value by key
+  get(key) {
+    if (this._isListEmpty) {
+      return
+    }
 
-  // List all nodes
+    let node = this.head
+
+    // Head case
+    if (this.head && this.head.key === key) {
+      console.log('Node found', node.ToString())
+      return this.head.value
+    }
+
+    // Tail case
+    if (this.tail && this.tail.key === key) {
+      node = this.tail // just for loggin
+      console.log('Node found', node.ToString())
+      return this.tail.value
+    }
+
+    node = this.head.next
+    do {
+      if (node.key === key) {
+        // early exits from loop
+        console.log('Node found', node.ToString())
+        return node.value
+      }
+      node = node.next
+    } while (node && node.next !== null);
+
+    console.log('Node not found!')
+  }
+
+  // !List all nodes
   list() { }
 
-  // Update node value
+  // !Update node value
   update(key, value) { }
 }
 
@@ -133,13 +164,15 @@ testList.add(2, 'two')
 testList.add(3, 'three')
 console.log(testList)
 console.log('------------')
-testList.remove(2)
-console.log(testList)
-console.log('------------')
-testList.remove(1)
-console.log(testList)
-console.log('------------')
-testList.removeAll()
-console.log(testList)
-console.log('------------')
+console.log(testList.get(2))
+// console.log('------------')
+// testList.remove(2)
+// console.log(testList)
+// console.log('------------')
+// testList.remove(1)
+// console.log(testList)
+// console.log('------------')
+// testList.removeAll()
+// console.log(testList)
+// console.log('------------')
 
