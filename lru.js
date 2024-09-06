@@ -31,7 +31,6 @@ class DoublyLinkedList {
     if (this._isListEmpty) {
       this.head = new LinkedNode(key, value)
       this.tail = this.head
-      console.log('Node added', this.tail.ToString())
       return
     }
 
@@ -43,7 +42,6 @@ class DoublyLinkedList {
     this.tail.next = node
     // last element on list points to new node
     this.tail = node
-    console.log('Node added', this.tail.ToString())
   }
 
   // Remove node
@@ -60,7 +58,6 @@ class DoublyLinkedList {
       this.head.next.prev = null
       // Makes head next the new head
       this.head = this.head.next
-      console.log('Node removed', node.ToString())
       return
     }
 
@@ -71,7 +68,6 @@ class DoublyLinkedList {
       this.tail.prev.next = null
       // Makes tail prev the new tail
       this.tail = this.tail.prev
-      console.log('Node removed', node.ToString())
       return
     }
 
@@ -87,13 +83,11 @@ class DoublyLinkedList {
           node.next.prev = node.prev
         }
         // early exits from loop
-        console.log('Node removed', node.ToString())
         return
       }
       node = node.next
     } while (node && node.next !== null);
 
-    console.log('Node not found!')
   }
 
   // Remove all nodes
@@ -112,14 +106,12 @@ class DoublyLinkedList {
 
     // Head case
     if (this.head && this.head.key === key) {
-      console.log('Node found', node.ToString())
       return this.head.value
     }
 
     // Tail case
     if (this.tail && this.tail.key === key) {
       node = this.tail // just for loggin
-      console.log('Node found', node.ToString())
       return this.tail.value
     }
 
@@ -127,13 +119,11 @@ class DoublyLinkedList {
     do {
       if (node.key === key) {
         // early exits from loop
-        console.log('Node found', node.ToString())
         return node.value
       }
       node = node.next
     } while (node && node.next !== null);
 
-    console.log('Node not found!')
   }
 
   // List all nodes
@@ -157,7 +147,6 @@ class DoublyLinkedList {
     // Head case
     if (this.head && this.head.key === key) {
       node.value = value
-      console.log('Node found', node.ToString())
       return this.head.value
     }
 
@@ -165,7 +154,6 @@ class DoublyLinkedList {
     if (this.tail && this.tail.key === key) {
       node = this.tail // just for 
       node.value = value
-      console.log('Node found', node.ToString())
       return this.tail.value
     }
 
@@ -174,13 +162,11 @@ class DoublyLinkedList {
       if (node.key === key) {
         // early exits from loop
         node.value = value
-        console.log('Node found', node.ToString())
         return node.value
       }
       node = node.next
     } while (node && node.next !== null);
 
-    console.log('Node not found!')
   }
 }
 
@@ -199,28 +185,5 @@ class LRU {
   // Get data from cache
 }
 
-const testList = new DoublyLinkedList()
-testList.add(1, 'one')
-testList.add(2, 'two')
-testList.add(3, 'three')
-console.log(testList)
-console.log('------------')
-console.log(testList.get(2))
-console.log('------------')
-for (const node of testList.list()) {
-  console.log(node)
-}
-console.log('------------')
-testList.update(2, 'dos')
-console.log(testList)
-console.log('------------')
-// testList.remove(2)
-// console.log(testList)
-// console.log('------------')
-// testList.remove(1)
-// console.log(testList)
-// console.log('------------')
-// testList.removeAll()
-// console.log(testList)
-// console.log('------------')
+
 
