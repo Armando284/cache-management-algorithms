@@ -8,7 +8,7 @@ class LinkedNode {
   }
 
   // Override to get values
-  ToString(callback) {
+  toString(callback) {
     return callback ? callback(this.value) : JSON.stringify(this.value)
   }
 }
@@ -225,7 +225,7 @@ class LRU {
   }
 
   // helper to log
-  ToString() {
+  toString() {
     let result = ''
     for (const node of this.linkedList.list()) {
       result = result + `${node.key}: ${node.value}, `
@@ -237,26 +237,26 @@ class LRU {
 const cache = new LRU(3)
 
 cache.push(1, 'one')
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.push(2, 'two')
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.push(3, 'three')
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.get(1)
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.push(4, 'four')
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.get(2)
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.get(3)
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
 cache.push(5, 'five')
-console.log(cache.ToString())
+console.log(`${cache}`)
 console.log('-------------')
