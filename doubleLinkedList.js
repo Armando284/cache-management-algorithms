@@ -1,16 +1,31 @@
+import LinkedNode from "./linkedNode"
+
 export default class DoubleLinkedList {
-  // Head
-  // Tail
+  /**
+   * Double Linked List.
+   * Includes list of nodes with pointers to previous and next node in the list.
+   * Includes head node of the list and tail (last) node of the list.
+   */
   constructor() {
     this.head = null
     this.tail = null
   }
 
+  /**
+   * Private.
+   * @returns {boolean} true if the list is empty. 
+   */
   get _isListEmpty() {
     return this.head === null && this.tail === null
   }
 
   // Finds node by key
+  /**
+   * Private.
+   * Finds node by key.
+   * @param { number | string } key Node id key.
+   * @returns { LinkedNode | null } Node or null if node it's not found.
+   */
   _findNode(key) {
     if (this._isListEmpty) {
       return null
@@ -38,7 +53,11 @@ export default class DoubleLinkedList {
     return null
   }
 
-  // Add node
+  /**
+   * Adds node to the tail of the list.
+   * @param { LinkedNode } node New node to add.
+   * @returns 
+   */
   add(node) {
     // if list is empty
     if (this._isListEmpty) {
@@ -55,7 +74,11 @@ export default class DoubleLinkedList {
     this.tail = node
   }
 
-  // Add node, lru needs nodes to be added to head
+  /**
+   * Adds node to the head of the list.
+   * @param { LinkedNode } node New node to add.
+   * @returns 
+   */
   addToHead(node) {
     // if list is empty
     if (this._isListEmpty) {
@@ -72,7 +95,11 @@ export default class DoubleLinkedList {
     this.head = node
   }
 
-  // Remove node
+  /**
+   * Removes node from the list by key
+   * @param {number | string} key Node id key.
+   * @returns 
+   */
   remove(key) {
     if (this._isListEmpty) {
       return
@@ -114,6 +141,10 @@ export default class DoubleLinkedList {
     return
   }
 
+  /**
+   * Removes list last item (tail).
+   * @returns { LinkedNode } New tail.
+   */
   removeTail() {
     // Clean tail prev next value
     this.tail.prev.next = null
@@ -123,13 +154,19 @@ export default class DoubleLinkedList {
     return this.tail
   }
 
-  // Remove all nodes
+  /**
+   * Removes all items from the list.
+   */
   removeAll() {
     this.head = null
     this.tail = null
   }
 
-  // Get node value by key
+  /**
+   * Gets node value by key.
+   * @param { number | string } key Node's id key.
+   * @returns { any | null } Node value or null if not found.
+   */
   getValue(key) {
     if (this._isListEmpty) {
       return null
@@ -140,7 +177,9 @@ export default class DoubleLinkedList {
     return node === null ? null : node.value
   }
 
-  // List all nodes
+  /**
+   * Generator that returns every node in the list.
+   */
   *list() {
     let node = this.head
 
@@ -150,7 +189,12 @@ export default class DoubleLinkedList {
     } while (node !== null)
   }
 
-  // Update node value
+  /**
+   * Updates node value by it's key.
+   * @param { number | string } key Node's id key.
+   * @param { any } value Node's new value.
+   * @returns { LinkedNode | null } Updated node or null if node is not found.
+   */
   update(key, value) {
     if (this._isListEmpty) {
       return null
