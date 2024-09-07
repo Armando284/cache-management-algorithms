@@ -1,4 +1,4 @@
-export default class DoublyLinkedList {
+export default class DoubleLinkedList {
   // Head
   // Tail
   constructor() {

@@ -1,5 +1,5 @@
-import LinkedNode from "./linkedNode.js";
-import DoublyLinkedList from "./DoublyLinkedList.js";
+import LinkedNode from './linkedNode.js'
+import DoubleLinkedList from './doubleLinkedList.js'
 
 export default class LRU {
   constructor(size) {
@@ -8,7 +8,7 @@ export default class LRU {
     // Hash map for faster access to keys
     this.hash = new Map()
     // Sized doubly linked list for order management
-    this.linkedList = new DoublyLinkedList()
+    this.linkedList = new DoubleLinkedList()
   }
 
   // Push data into cache
