@@ -2,7 +2,7 @@ class LinkedNode {
   constructor(key, value) {
     this.key = key // For key search
     this.value = value
-    // Needs pointer to prev and next since it will be doubly linked list 
+    // Needs pointer to prev and next since it will be doubly linked list
     this.prev = null
     this.next = null
   }
@@ -84,8 +84,7 @@ class DoublyLinkedList {
         return
       }
       node = node.next
-    } while (node !== null);
-
+    } while (node !== null)
   }
 
   removeTail() {
@@ -129,7 +128,7 @@ class DoublyLinkedList {
         return node.value
       }
       node = node.next
-    } while (node !== null);
+    } while (node !== null)
 
     return null
   }
@@ -141,7 +140,7 @@ class DoublyLinkedList {
     do {
       yield node
       node = node.next
-    } while (node !== null);
+    } while (node !== null)
   }
 
   // Update node value
@@ -160,7 +159,7 @@ class DoublyLinkedList {
 
     // Tail case
     if (this.tail && this.tail.key === key) {
-      node = this.tail // just for 
+      node = this.tail // just for
       node.value = value
       return this.tail
     }
@@ -173,7 +172,7 @@ class DoublyLinkedList {
         return node
       }
       node = node.next
-    } while (node !== null);
+    } while (node !== null)
 
     return null
   }
