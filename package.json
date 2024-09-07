@@ -1,0 +1,26 @@
+{
+  "name": "cache",
+  "version": "1.0.0",
+  "description": "Tests and implementations of cache management algorithms",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Armando284/cache-management-algorithms.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "cache",
+    "algorithms",
+    "DSA"
+  ],
+  "author": "Armando J. Peña Tamayo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Armando284/cache-management-algorithms/issues"
+  },
+  "homepage": "https://github.com/Armando284/cache-management-algorithms#readme"
+}
