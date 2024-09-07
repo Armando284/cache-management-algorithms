@@ -25,8 +25,53 @@ class DoublyLinkedList {
     return this.head === null && this.tail === null
   }
 
-  // Add node, lru needs nodes to be added to head
+  // Finds node by key
+  _findNode(key) {
+    if (this._isListEmpty) {
+      return null
+    }
+
+    // Head case
+    if (this.head && this.head.key === key) {
+      return this.head
+    }
+
+    // Tail case
+    if (this.tail && this.tail.key === key) {
+      return this.tail
+    }
+
+    let node = this.head.next
+    do {
+      if (node.key === key) {
+        // early exits from loop
+        return node
+      }
+      node = node.next
+    } while (node !== null)
+
+    return null
+  }
+
+  // Add node
   add(node) {
+    // if list is empty
+    if (this._isListEmpty) {
+      this.head = node
+      this.tail = this.head
+      return
+    }
+
+    // new node prev is equal to * LASt * element on list
+    node.prev = this.tail
+    // last element next points to new node
+    this.tail.next = node
+    // tail points to new node
+    this.tail = node
+  }
+
+  // Add node, lru needs nodes to be added to head
+  addToHead(node) {
     // if list is empty
     if (this._isListEmpty) {
       this.head = node
@@ -48,10 +93,14 @@ class DoublyLinkedList {
       return
     }
 
-    let node = this.head
+    const node = this._findNode(key)
+
+    if (node === null) {
+      return
+    }
 
     // Head case
-    if (this.head && this.head.key === key) {
+    if (node === this.head) {
       // Clean head next prev value
       this.head.next.prev = null
       // Makes head next the new head
@@ -60,8 +109,7 @@ class DoublyLinkedList {
     }
 
     // Tail case
-    if (this.tail && this.tail.key === key) {
-      node = this.tail // just for loggin
+    if (node === this.tail) {
       // Clean tail prev next value
       this.tail.prev.next = null
       // Makes tail prev the new tail
@@ -69,22 +117,16 @@ class DoublyLinkedList {
       return
     }
 
-    node = this.head.next
-    do {
-      if (node.key === key) {
-        // prev node next value points to node next node
-        if (node.prev !== null) {
-          node.prev.next = node.next
-        }
-        // next node prev value points to node prev node
-        if (node.next !== null) {
-          node.next.prev = node.prev
-        }
-        // early exits from loop
-        return
-      }
-      node = node.next
-    } while (node !== null)
+    // prev node next value points to node next node
+    if (node.prev !== null) {
+      node.prev.next = node.next
+    }
+    // next node prev value points to node prev node
+    if (node.next !== null) {
+      node.next.prev = node.prev
+    }
+    // early exits from loop
+    return
   }
 
   removeTail() {
@@ -103,34 +145,14 @@ class DoublyLinkedList {
   }
 
   // Get node value by key
-  get(key) {
+  getValue(key) {
     if (this._isListEmpty) {
       return null
     }
 
-    let node = this.head
+    const node = this._findNode(key)
 
-    // Head case
-    if (this.head && this.head.key === key) {
-      return this.head.value
-    }
-
-    // Tail case
-    if (this.tail && this.tail.key === key) {
-      node = this.tail // just for loggin
-      return this.tail.value
-    }
-
-    node = this.head.next
-    do {
-      if (node.key === key) {
-        // early exits from loop
-        return node.value
-      }
-      node = node.next
-    } while (node !== null)
-
-    return null
+    return node === null ? null : node.value
   }
 
   // List all nodes
@@ -149,32 +171,15 @@ class DoublyLinkedList {
       return null
     }
 
-    let node = this.head
+    const node = this._findNode(key)
 
-    // Head case
-    if (this.head && this.head.key === key) {
-      node.value = value
-      return this.head
+    if (node === null) {
+      return null
     }
 
-    // Tail case
-    if (this.tail && this.tail.key === key) {
-      node = this.tail // just for
-      node.value = value
-      return this.tail
-    }
+    node.value = value
 
-    node = this.head.next
-    do {
-      if (node.key === key) {
-        // early exits from loop
-        node.value = value
-        return node
-      }
-      node = node.next
-    } while (node !== null)
-
-    return null
+    return node
   }
 }
 
@@ -195,7 +200,7 @@ class LRU {
     }
 
     const node = new LinkedNode(key, value)
-    this.linkedList.add(node)
+    this.linkedList.addToHead(node)
     this.hash.set(key, node)
     if (this.hash.size > this.size) {
       this.hash.delete(this.linkedList.tail.key)
@@ -213,7 +218,7 @@ class LRU {
     const node = this.hash.get(key)
     if (node !== this.linkedList.head) {
       this.linkedList.remove(key)
-      this.linkedList.add(node)
+      this.linkedList.addToHead(node)
     }
 
     return node.value
