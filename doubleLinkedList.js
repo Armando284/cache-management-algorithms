@@ -15,19 +15,18 @@ export default class DoubleLinkedList {
    * Private.
    * @returns {boolean} true if the list is empty. 
    */
-  get _isListEmpty() {
+  get #isListEmpty() {
     return this.head === null && this.tail === null
   }
 
-  // Finds node by key
   /**
    * Private.
    * Finds node by key.
    * @param { number | string } key Node id key.
    * @returns { LinkedNode | null } Node or null if node it's not found.
    */
-  _findNode(key) {
-    if (this._isListEmpty) {
+  #findNode(key) {
+    if (this.#isListEmpty) {
       return null
     }
 
@@ -60,7 +59,7 @@ export default class DoubleLinkedList {
    */
   add(node) {
     // if list is empty
-    if (this._isListEmpty) {
+    if (this.#isListEmpty) {
       this.head = node
       this.tail = this.head
       return
@@ -81,7 +80,7 @@ export default class DoubleLinkedList {
    */
   addToHead(node) {
     // if list is empty
-    if (this._isListEmpty) {
+    if (this.#isListEmpty) {
       this.head = node
       this.tail = this.head
       return
@@ -101,11 +100,11 @@ export default class DoubleLinkedList {
    * @returns 
    */
   remove(key) {
-    if (this._isListEmpty) {
+    if (this.#isListEmpty) {
       return
     }
 
-    const node = this._findNode(key)
+    const node = this.#findNode(key)
 
     if (node === null) {
       return
@@ -137,7 +136,7 @@ export default class DoubleLinkedList {
     if (node.next !== null) {
       node.next.prev = node.prev
     }
-    // early exits from loop
+
     return
   }
 
@@ -168,11 +167,11 @@ export default class DoubleLinkedList {
    * @returns { any | null } Node value or null if not found.
    */
   getValue(key) {
-    if (this._isListEmpty) {
+    if (this.#isListEmpty) {
       return null
     }
 
-    const node = this._findNode(key)
+    const node = this.#findNode(key)
 
     return node === null ? null : node.value
   }
@@ -196,11 +195,11 @@ export default class DoubleLinkedList {
    * @returns { LinkedNode | null } Updated node or null if node is not found.
    */
   update(key, value) {
-    if (this._isListEmpty) {
+    if (this.#isListEmpty) {
       return null
     }
 
-    const node = this._findNode(key)
+    const node = this.#findNode(key)
 
     if (node === null) {
       return null
